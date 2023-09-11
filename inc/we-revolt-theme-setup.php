@@ -4,13 +4,6 @@ if (! defined('ABSPATH')){
 	exit;
 }
 
-if (! defined('REVOLT_V')){
-	define( 'REVOLT_V', '1.0.a' );
-}
-
-if (! defined('ASSETS')){
-	define( 'ASSETS', get_template_directory_uri() . '/front-end-assets' );
-}
 function we_revolt_setup(): void {
 
 	load_theme_textdomain( 'we-revolt', get_template_directory() . '/languages' );
@@ -21,6 +14,8 @@ function we_revolt_setup(): void {
 	add_theme_support( 'title-tag' );
 
 	add_theme_support( 'post-thumbnails' );
+
+	add_image_size( 'slider', 1920, 750, ['center', 'center'] );
 
 	register_nav_menus(
 		array(
@@ -89,3 +84,14 @@ function we_revolt_scripts(): void {
 }
 
 add_action( 'wp_enqueue_scripts', 'we_revolt_scripts' );
+
+function remove_default_image_sizes( $sizes) {
+	unset( $sizes['thumbnail']);
+	unset( $sizes['medium']);
+	unset( $sizes['medium_large']);
+	unset( $sizes['large']);
+	unset( $sizes['1536x1536']);
+	unset( $sizes['2048x2048']);
+	return $sizes;
+}
+add_filter('intermediate_image_sizes_advanced', 'remove_default_image_sizes', 10, 1);
