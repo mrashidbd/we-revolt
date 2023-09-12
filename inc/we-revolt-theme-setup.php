@@ -82,8 +82,21 @@ function we_revolt_scripts(): void {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-
 add_action( 'wp_enqueue_scripts', 'we_revolt_scripts' );
+
+function we_revolt_mime_types( $mimes ) {
+
+	// New allowed mime types.
+	$mimes['svg']  = 'image/svg+xml';
+	$mimes['svgz'] = 'image/svg+xml';
+
+	// Remove a mime type.
+	//unset( $mimes['exe'] );
+
+	return $mimes;
+}
+
+add_filter( 'upload_mimes', 'we_revolt_mime_types' );
 
 function remove_default_image_sizes( $sizes) {
 	unset( $sizes['thumbnail']);

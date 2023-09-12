@@ -194,7 +194,6 @@ html #header .header-logo .logo-sticky {
 }
 
 html #header .header-container {
-		height: 120px;
 		transition: ease height 300ms;
 }
 
@@ -254,7 +253,7 @@ html:not(.sticky-header-active) #header.header-semi-transparent-light .header-bo
 
 @media (min-width: 992px) {
 		html:not(.sticky-header-active) #header .header-body {
-				transform: translate3d(0, 50px, 0);
+				transform: translate3d(0, 20px, 0);
 		}
 }
 
@@ -603,3 +602,6 @@ html:not(.sticky-header-active) #header.header-semi-transparent-light .header-bo
 #footer {
 		background: #f4f4f4;
 }
+
+
+/**************** BLOG *****************/

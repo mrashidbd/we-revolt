@@ -10,6 +10,13 @@
  */
 
 get_header();
+
+$rightArrow = get_template_directory_uri() . '/front-end-assets/icons/arrow-right.svg';
+$pushCart = get_template_directory_uri() . '/front-end-assets/icons/pushcart.svg';
+$winch = get_template_directory_uri() . '/front-end-assets/icons/winch.svg';
+$faucet = get_template_directory_uri() . '/front-end-assets/icons/faucet.svg';
+$paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brush.svg';
+
 ?>
 
     <div role="main" class="main">
@@ -103,11 +110,11 @@ get_header();
             <div class="row justify-content-between align-items-center flex-lg-nowrap gy-3">
                 <div class="col-lg-4">
                     <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5 appear-animation"
-                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2000">Who We Are</h2>
+                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2000"><?php echo carbon_get_the_post_meta( 'cta_title' ) ?></h2>
                     <p class="text-4 font-weight-light mb-0 appear-animation"
-                       data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2200">Cras a elit sit
-                        amet leo accumsan volutsudisse hendrerit vehicula leo, vel efficitur felis ultrices non
-                        nteger. </p>
+                       data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2200">
+	                    <?php echo carbon_get_the_post_meta( 'cta_subtitle' ) ?>
+                    </p>
                 </div>
                 <div class="col-auto d-none d-lg-block">
                     <svg width="145" height="147" xmlns="http://www.w3.org/2000/svg"
@@ -124,118 +131,67 @@ get_header();
                 </div>
                 <div class="col-lg-6">
                     <p class="font-weight-medium text-3-5 appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                       data-appear-animation-delay="3200">Cras a elit sit amet leo accumsan volutpat. Suspendisse
-                        hendrerit vehicula leo, vel efficitur felis <span
-                                class="highlight highlight-primary highlight-bg-opacity highlight-animated"
-                                data-appear-animation="highlight-animated-start" data-appear-animation-delay="4000"
-                                data-plugin-options="{'flagClassOnly': true}">ultrices non hendrerit</span> vehicula
-                        leo, vel efficitur felis ultrices non.</p>
-                    <a href="demo-construction-company.html"
+                       data-appear-animation-delay="3200"><?php echo carbon_get_the_post_meta('cta_desc'); ?></p>
+                    <a href="<?php echo carbon_get_the_post_meta( 'cta_link' ) ?>"
                        class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none appear-animation"
                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="3400">
-                        View More
-                        <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon
+                        <?php _e('Learn More', 'revolt'); ?>
+                        <img width="27" height="27" src="<?php echo $rightArrow; ?>" alt="" data-icon
                              data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"/>
                     </a>
                 </div>
             </div>
         </div>
 
+	    <?php
+	    $args = array(
+		    'post_type'      => 'services',
+		    'order'          => 'DESC',
+		    'post_status'    => 'publish',
+		    'posts_per_page' => 4,
+	    );
+	    $q    = new WP_Query( $args );
+	    if ( $q->have_posts() ):
+        ?>
+
         <section class="section position-relative overflow-hidden border-0 m-0">
             <div class="container pt-5-5 pb-5 mb-3">
                 <div class="row mb-5-5">
                     <div class="col">
                         <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5 appear-animation"
-                            data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="300">Services</h2>
+                            data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="300"><?php echo carbon_get_the_post_meta('service_title'); ?></h2>
                         <p class="text-4 font-weight-light appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                           data-appear-animation-delay="500">Cras a elit sit amet leo accumsan volutsudisse. </p>
+                           data-appear-animation-delay="500"><?php echo carbon_get_the_post_meta('service_subtitle'); ?></p>
                     </div>
                 </div>
                 <div class="row">
+
+                 <?php
+                    while ( $q->have_posts() ):
+                        $q->the_post();
+                    ?>
+
                     <div class="col-md-6 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus"
                          data-appear-animation-delay="550">
                         <div class="d-flex">
                             <img class="flex-0-0-auto" width="60" height="60"
-                                 src="img/demos/construction/icons/faucet.svg" alt="" data-icon
+                                 src="<?php echo wp_get_attachment_image_src(carbon_get_the_post_meta('service_icon'))[0]; ?>" alt="" data-icon
                                  data-plugin-options="{'animated': true, 'delay': 300, 'accY': 400, 'strokeBased': true, 'extraClass': 'svg-stroke-color-dark'}"/>
                             <div class="ps-4">
-                                <h3 class="text-color-dark font-weight-bold text-transform-none text-5 mb-2">
-                                    Plumbing</h3>
-                                <p class="font-weight-light text-3-5 mb-3-5">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia. </p>
-                                <a href="demo-construction-services-detail.html"
-                                   class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none">
-                                    View More
-                                    <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg"
+                                <h3 class="text-color-dark font-weight-bold text-transform-none text-5 mb-2"><?php the_title(); ?></h3>
+                                <p class="font-weight-light text-3-5 mb-3-5"><?php the_excerpt(); ?></p>
+                                <a href="<?php the_permalink(); ?>"
+                                   class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none"><?php _e('Learn More', 'revolt'); ?>
+                                    <img width="27" height="27" src="<?php echo $rightArrow; ?>"
                                          alt="" data-icon
                                          data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"/>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                         data-appear-animation-delay="750">
-                        <div class="d-flex">
-                            <img class="flex-0-0-auto" width="70" height="70"
-                                 src="img/demos/construction/icons/winch.svg" alt="" data-icon
-                                 data-plugin-options="{'animated': true, 'delay': 600, 'accY': 400, 'strokeBased': true, 'extraClass': 'svg-stroke-color-dark'}"/>
-                            <div class="ps-3">
-                                <h3 class="text-color-dark font-weight-bold text-transform-none text-5 mb-2">General
-                                    Construction</h3>
-                                <p class="font-weight-light text-3-5 mb-3-5">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia. </p>
-                                <a href="demo-construction-services-detail.html"
-                                   class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none">
-                                    View More
-                                    <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg"
-                                         alt="" data-icon
-                                         data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"/>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-5 mb-md-0 appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                         data-appear-animation-delay="950">
-                        <div class="d-flex">
-                            <img class="flex-0-0-auto" width="60" height="60"
-                                 src="img/demos/construction/icons/paint-brush.svg" alt="" data-icon
-                                 data-plugin-options="{'animated': true, 'delay': 900, 'strokeBased': true, 'extraClass': 'svg-stroke-color-dark'}"/>
-                            <div class="ps-4">
-                                <h3 class="text-color-dark font-weight-bold text-transform-none text-5 mb-2">
-                                    Painting</h3>
-                                <p class="font-weight-light text-3-5 mb-3-5">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia. </p>
-                                <a href="demo-construction-services-detail.html"
-                                   class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none">
-                                    View More
-                                    <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg"
-                                         alt="" data-icon
-                                         data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"/>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                         data-appear-animation-delay="1150">
-                        <div class="d-flex">
-                            <img class="flex-0-0-auto" width="60" height="60"
-                                 src="img/demos/construction/icons/pushcart.svg" alt="" data-icon
-                                 data-plugin-options="{'animated': true, 'delay': 1200, 'strokeBased': true, 'extraClass': 'svg-stroke-color-dark'}"/>
-                            <div class="ps-4">
-                                <h3 class="text-color-dark font-weight-bold text-transform-none text-5 mb-2">
-                                    Pre-Construction</h3>
-                                <p class="font-weight-light text-3-5 mb-3-5">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia. </p>
-                                <a href="demo-construction-services-detail.html"
-                                   class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none">
-                                    View More
-                                    <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg"
-                                         alt="" data-icon
-                                         data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"/>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+
+                    <?php endwhile; ?>
+
                 </div>
             </div>
             <div class="position-absolute transform3dy-n50 right-0 pe-5 me-4">
@@ -251,12 +207,15 @@ get_header();
                 </div>
             </div>
         </section>
+        <?php endif; ?>
+
+	    <?php wp_reset_postdata(); ?>
 
         <div class="container py-5 my-5-5">
             <div class="row">
                 <div class="col">
-                    <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5">Projects</h2>
-                    <p class="text-4 font-weight-light">Cras a elit sit amet leo accumsan volutsudisse. </p>
+                    <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5"><?php echo carbon_get_the_post_meta('project_title'); ?></h2>
+                    <p class="text-4 font-weight-light"><?php echo carbon_get_the_post_meta('project_subtitle'); ?></p>
                 </div>
             </div>
             <div class="row">
@@ -385,17 +344,12 @@ get_header();
             <div class="row">
                 <div class="col-md-8 col-lg-6">
                     <p class="text-3-5 appear-animation" data-appear-animation="fadeInUpShorterPlus"
-                       data-appear-animation-delay="600">Cras a elit sit amet leo accumsan volutpat. Suspendisse
-                        hendrerit vehicula leo, vel efficitur felis <span
-                                class="highlight highlight-primary highlight-bg-opacity highlight-animated"
-                                data-appear-animation="highlight-animated-start" data-appear-animation-delay="1100"
-                                data-plugin-options="{'flagClassOnly': true}">ultrices non hendrerit</span> vehicula
-                        leo, vel efficitur felis ultrices non.</p>
-                    <a href="demo-construction-projects.html"
+                       data-appear-animation-delay="600"><?php echo carbon_get_the_post_meta('project_desc'); ?></p>
+                    <a href="<?php echo carbon_get_the_post_meta('all_project_link'); ?>"
                        class="custom-view-more d-inline-flex align-items-center btn btn-primary font-weight-semibold rounded-0 text-3-5 btn-px-4 btn-py-2 appear-animation"
                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800">
-                        View Projects
-                        <img width="27" height="27" src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon
+                        View All Projects
+                        <img width="27" height="27" src="<?php echo $rightArrow; ?>" alt="" data-icon
                              data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-light ms-2'}"/>
                     </a>
                 </div>
@@ -499,7 +453,7 @@ get_header();
                                 <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
 											View More
 											<img width="27" height="27"
-                                                 src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon
+                                                 src="<?php echo $rightArrow; ?>" alt="" data-icon
                                                  data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
                                                  style="width: 27px;"/>
 										</span>
@@ -532,7 +486,7 @@ get_header();
                                 <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
 											View More
 											<img width="27" height="27"
-                                                 src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon
+                                                 src="<?php echo $rightArrow; ?>" alt="" data-icon
                                                  data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
                                                  style="width: 27px;"/>
 										</span>
@@ -565,7 +519,7 @@ get_header();
                                 <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
 											View More
 											<img width="27" height="27"
-                                                 src="img/demos/construction/icons/arrow-right.svg" alt="" data-icon
+                                                 src="<?php echo $rightArrow; ?>" alt="" data-icon
                                                  data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
                                                  style="width: 27px;"/>
 										</span>

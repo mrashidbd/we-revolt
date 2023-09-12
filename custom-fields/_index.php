@@ -1,8 +1,5 @@
 <?php
 
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
-
 //add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
 //function crb_attach_theme_options() {
 //	Container::make( 'theme_options', __( 'Theme Options' ) )
@@ -11,12 +8,10 @@ use Carbon_Fields\Field;
 //	         ) );
 //}
 
+//For Post Types
+require get_template_directory() . '/custom-fields/slider_post_type.php';
+require get_template_directory() . '/custom-fields/service_post_type.php';
 
-add_action( 'carbon_fields_register_fields', 'werevolt_slider_cf' );
-function werevolt_slider_cf(): void {
-	Container::make( 'post_meta', 'Slider Options' )
-	         ->where( 'post_type', '=', 'slide' )
-	         ->add_fields( [
-		         Field::make( 'text', 'slide_message', __( 'Words inside the slide', 'revolt' ) )
-	         ] );
-}
+//for page-templates
+require get_template_directory() . '/custom-fields/template_welcome.php';
+
