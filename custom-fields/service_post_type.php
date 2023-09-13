@@ -11,23 +11,23 @@ function werevolt_service_cf(): void {
 	];
 
 	Container::make( 'post_meta', 'Service Details' )
-	         ->where( 'post_type', '=', 'services' )
-	         ->add_fields( [
-		         Field::make( 'text', 'step_intro', __( 'Introductory text for service steps' ) )
-		              ->set_width( 50 ),
+	         ->where( 'post_type', '=', 'service' )
+	         ->add_tab( __( 'Service' ), [
+		         Field::make( 'text', 'step_intro', __( 'Introductory text for service steps' ) ),
 		         Field::make( 'complex', 'service_steps', __( 'Service Steps' ) )
 		              ->setup_labels( $s_labels )
-		              ->set_width( 50 )
 		              ->add_fields( [
 			              Field::make( 'text', 'title' )->set_help_text( 'Step Title' ),
 			              Field::make( 'textarea', 'desc' )->set_help_text( 'Step Description' ),
-		              ] ),
-		         Field::make( 'text', 'additional_text', __( 'Additional service introductory text' ) )
-		              ->set_width( 50 ),
+		              ] )
+	         ] )
+	         ->add_tab( ( 'Additional Service' ), [
+		         Field::make( 'text', 'additional_text', __( 'Additional service introductory text' ) ),
 		         Field::make( 'file', 'service_icon', __( 'Service Icon' ) )
 		              ->set_type( 'image' )
 		              ->set_width( 50 ),
-		         Field::make( 'textarea', 'additional_services', __( 'Additional Services' ) )
+		         Field::make( 'textarea', 'additional_services', __( 'Additional Services [Comma Separated]' ) )
+		              ->set_width( 50 )
 	         ] );
 }
 

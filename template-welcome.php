@@ -18,7 +18,6 @@ $faucet = get_template_directory_uri() . '/front-end-assets/icons/faucet.svg';
 $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brush.svg';
 
 ?>
-
     <div role="main" class="main">
         <div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual dots-inside dots-horizontal-center show-dots-hover nav-style-diamond nav-with-transparency nav-inside nav-inside-plus nav-dark nav-md nav-font-size-md show-nav-hover mb-0"
              data-plugin-options="{'autoplay': false, 'autoplayTimeout': 7000}"
@@ -145,8 +144,8 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
 	    <?php
 	    $args = array(
-		    'post_type'      => 'services',
-		    'order'          => 'DESC',
+		    'post_type'      => 'service',
+		    'order'          => 'ASC',
 		    'post_status'    => 'publish',
 		    'posts_per_page' => 4,
 	    );
@@ -211,6 +210,17 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
 	    <?php wp_reset_postdata(); ?>
 
+	    <?php
+	    $args = array(
+		    'post_type'      => 'project',
+		    'order'          => 'ASC',
+		    'post_status'    => 'publish',
+		    'posts_per_page' => 7,
+	    );
+	    $q    = new WP_Query( $args );
+	    if ( $q->have_posts() ):
+		    ?>
+
         <div class="container py-5 my-5-5">
             <div class="row">
                 <div class="col">
@@ -264,76 +274,49 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
                         <div class="diamonds-wrapper">
                             <ul class="diamonds mb-0">
+
+                                <?php
+
+                                    $delay = 3800;
+
+                                    function getFeaturedImage($size): string {
+                                        return get_the_post_thumbnail_url( get_the_ID(), $size );
+                                    }
+
+                                    while ($q->have_posts()):
+                                        $q->the_post();
+
+                                    $post_count = $q->current_post;
+
+                                    $special_class = '';
+                                    $accY = '';
+
+                                    $delay += 200;
+
+                                    if ($post_count === 3 || $post_count === 5 || $post_count === 6){
+                                        $special_class = 'diamond diamond-sm lightbox';
+                                    }else{
+	                                    $special_class = 'diamond lightbox';
+                                    }
+
+                                    $post_count > 3 ? $accY = '-100' : $accY = '-400';
+
+
+
+                                ?>
+
                                 <li>
-                                    <a href="img/demos/construction/generic/generic-1-medium.jpg"
-                                       class="diamond lightbox" data-plugin-options="{'type':'image'}">
+                                    <a href="<?php echo getFeaturedImage('full'); ?>"
+                                       class="<?php echo $special_class; ?>" data-plugin-options="{'type':'image'}">
                                         <div class="content">
-                                            <img src="img/demos/construction/generic/generic-1.jpg"
+                                            <img src="<?php echo getFeaturedImage('project_thumb'); ?>"
                                                  class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 4000, 'imagesListURL': ['img/demos/construction/generic/generic-4.jpg', 'img/demos/construction/generic/generic-3.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-9-medium.jpg', 'img/demos/construction/generic/generic-3-medium.jpg', 'img/demos/construction/generic/generic-1-medium.jpg'], 'animateIn': 'blurIn', 'accY': -400}"/>
+                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': <?php echo $delay; ?>, 'imagesListURL': ['<?php echo getFeaturedImage('project_thumb'); ?>'], 'lightboxImagesListURL': ['<?php echo getFeaturedImage('full'); ?>'], 'animateIn': 'blurIn', 'accY': <?php echo $accY; ?>}"/>
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-2-big.jpg" class="diamond lightbox"
-                                       data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-2.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 4200, 'imagesListURL': ['img/demos/construction/generic/generic-3.jpg', 'img/demos/construction/generic/generic-4.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-3-medium.jpg', 'img/demos/construction/generic/generic-9-medium.jpg', 'img/demos/construction/generic/generic-2-big.jpg'], 'animateIn': 'blurIn', 'accY': -400}"/>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-9-medium.jpg"
-                                       class="diamond lightbox" data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-4.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 4400, 'imagesListURL': ['img/demos/construction/generic/generic-1.jpg', 'img/demos/construction/generic/generic-2.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-1-medium.jpg', 'img/demos/construction/generic/generic-2-medium.jpg', 'img/demos/construction/generic/generic-9-medium.jpg'], 'animateIn': 'blurIn', 'accY': -400}"/>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-5-wide.jpg"
-                                       class="diamond diamond-sm lightbox" data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-5-small.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 4600, 'imagesListURL': ['img/demos/construction/generic/generic-6-small.jpg', 'img/demos/construction/generic/generic-10-small-diamond.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-6-medium.jpg', 'img/demos/construction/generic/generic-10-medium.jpg', 'img/demos/construction/generic/generic-5-wide.jpg'], 'animateIn': 'blurIn', 'accY': -400}"/>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-3-medium.jpg"
-                                       class="diamond lightbox" data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-3.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 4800, 'imagesListURL': ['img/demos/construction/generic/generic-2.jpg', 'img/demos/construction/generic/generic-1.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-2-big.jpg', 'img/demos/construction/generic/generic-1-medium.jpg', 'img/demos/construction/generic/generic-3-medium.jpg'], 'animateIn': 'blurIn', 'accY': -100}"/>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-6-medium.jpg"
-                                       class="diamond diamond-sm lightbox" data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-6-small.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 5000, 'imagesListURL': ['img/demos/construction/generic/generic-5-small.jpg', 'img/demos/construction/generic/generic-7-small.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-5-wide.jpg', 'img/demos/construction/generic/generic-10-medium.jpg', 'img/demos/construction/generic/generic-6-medium.jpg'], 'animateIn': 'blurIn', 'accY': -100}"/>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="img/demos/construction/generic/generic-10-medium.jpg"
-                                       class="diamond diamond-sm lightbox" data-plugin-options="{'type':'image'}">
-                                        <div class="content">
-                                            <img src="img/demos/construction/generic/generic-7-small.jpg"
-                                                 class="img-fluid plugin-random-images" alt="" data-plugin-random-images
-                                                 data-plugin-options="{'minWindowWidth': 1200, 'random': false, 'delay': 5200, 'imagesListURL': ['img/demos/construction/generic/generic-10-small-diamond.jpg', 'img/demos/construction/generic/generic-6-small.jpg'], 'lightboxImagesListURL': ['img/demos/construction/generic/generic-10-medium.jpg', 'img/demos/construction/generic/generic-6-medium.jpg', 'img/demos/construction/generic/generic-10-medium.jpg'], 'animateIn': 'blurIn', 'accY': -100}"/>
-                                        </div>
-                                    </a>
-                                </li>
+                            <?php endwhile; ?>
+
                             </ul>
                         </div>
 
@@ -355,6 +338,10 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
                 </div>
             </div>
         </div>
+
+        <?php endif; ?>
+
+        <?php wp_reset_postdata(); ?>
 
         <section class="section parallax border-0 pt-5 py-0 m-0" data-plugin-parallax
                  data-plugin-options="{'spped': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}"

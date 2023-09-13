@@ -16,6 +16,9 @@ function we_revolt_setup(): void {
 	add_theme_support( 'post-thumbnails' );
 
 	add_image_size( 'slider', 1920, 750, ['center', 'center'] );
+	add_image_size( 'project_thumb', 360, 360, ['center', 'center'] );
+	add_image_size( 'project_thumb_wide', 450, 350, ['center', 'center'] );
+	add_image_size( 'blog_thumb', 1200, 500, ['center', 'center'] );
 
 	register_nav_menus(
 		array(
