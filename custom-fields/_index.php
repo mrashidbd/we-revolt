@@ -11,6 +11,7 @@
 //For Post Types
 require get_template_directory() . '/custom-fields/slider_post_type.php';
 require get_template_directory() . '/custom-fields/service_post_type.php';
+require get_template_directory() . '/custom-fields/client_post_type.php';
 
 //for page-templates
 require get_template_directory() . '/custom-fields/template_welcome.php';

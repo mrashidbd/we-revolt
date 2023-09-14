@@ -35,3 +35,15 @@ function we_revolt_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'we_revolt_pingback_header' );
+
+
+/************************************** Helper Functions ************************************/
+
+//Get Featured Image
+function getFeaturedImage($size): string {
+	return get_the_post_thumbnail_url( get_the_ID(), $size );
+}
+
+function getFeaturedImageObg($size): array {
+	return wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
+}

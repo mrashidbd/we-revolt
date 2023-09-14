@@ -30,6 +30,22 @@ function werevolt_template_welcome_cf(): void {
 				     ->set_width(50),
 				Field::make('text', 'all_project_link', __('All Project Page Link', 'revolt'))
 				     ->set_width(50)
+			] )
+			->add_tab( __( 'Quote Section' ), [
+				Field::make( 'text', 'quote_author_title', __( 'Name', 'revolt' ) )
+				     ->set_width(50),
+				Field::make('text', 'quote_author_position', __('Position', 'revolt'))
+				     ->set_width(50),
+				Field::make('textarea', 'the_quote', __('Quote', 'revolt'))
+				     ->set_width(50),
+				Field::make('image', 'quote_author_picture', __('Picture', 'revolt'))
+				     ->set_width(50)
+			] )
+			->add_tab( __( 'Featured Clients' ), [
+				Field::make( 'text', 'clients_title', __( 'Title', 'revolt' ) )
+				     ->set_width(50),
+				Field::make('text', 'clients_subtitle', __('Subtitle', 'revolt'))
+				     ->set_width(50)
 			] );
 }
 

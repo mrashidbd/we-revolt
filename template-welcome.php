@@ -145,7 +145,7 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 	    <?php
 	    $args = array(
 		    'post_type'      => 'service',
-		    'order'          => 'ASC',
+		    'order'          => 'DESC',
 		    'post_status'    => 'publish',
 		    'posts_per_page' => 4,
 	    );
@@ -206,11 +206,10 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
                 </div>
             </div>
         </section>
-        <?php endif; ?>
+        <?php endif;
 
-	    <?php wp_reset_postdata(); ?>
+        wp_reset_postdata();
 
-	    <?php
 	    $args = array(
 		    'post_type'      => 'project',
 		    'order'          => 'ASC',
@@ -279,9 +278,7 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
                                     $delay = 3800;
 
-                                    function getFeaturedImage($size): string {
-                                        return get_the_post_thumbnail_url( get_the_ID(), $size );
-                                    }
+
 
                                     while ($q->have_posts()):
                                         $q->the_post();
@@ -316,6 +313,7 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
                                     </a>
                                 </li>
                             <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
 
                             </ul>
                         </div>
@@ -341,15 +339,13 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
         <?php endif; ?>
 
-        <?php wp_reset_postdata(); ?>
-
         <section class="section parallax border-0 pt-5 py-0 m-0" data-plugin-parallax
                  data-plugin-options="{'spped': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}"
-                 data-image-src="img/demos/construction/backgrounds/background-1.jpg">
+                 data-image-src="<?php echo getFeaturedImage('full'); ?>">
             <div class="container">
                 <div class="row gy-5">
                     <div class="col-lg-6 text-center order-2 order-lg-1">
-                        <img src="img/demos/construction/authors/author-1-big.png" class="img-fluid"
+                        <img src="<?php echo wp_get_attachment_url(carbon_get_the_post_meta('quote_author_picture')); ?>" class="img-fluid"
                              alt="Woman testimonial from Porto Magazine company"/>
                     </div>
                     <div class="col-lg-6 align-self-center pb-lg-5 order-1 order-lg-2 ps-5 ps-lg-0">
@@ -358,13 +354,11 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
                                 <p class="alternative-font-4 font-weight-medium text-start text-4 px-2 mb-0"
                                    data-plugin-animated-letters
                                    data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">
-                                    Cras a elit sit amet leo accumsan volutpat. Suspendisse hendreriast ehicula leo, vel
-                                    efficitur felis ultrices non cras a elit sit amet leo acun volutpat. Suspendisse
-                                    hendrerit vehicula leo, vel efficitur fel.</p>
+                                    <?php echo carbon_get_the_post_meta('the_quote'); ?></p>
                             </blockquote>
                             <div class="testimonial-author text-start ps-3 ms-1">
-                                <strong class="text-4-5 negative-ls-1">Anne Doe Smith</strong>
-                                <p class="text-color-default text-start mb-0">Porto Magazine</p>
+                                <strong class="text-4-5 negative-ls-1"><?php echo carbon_get_the_post_meta('quote_author_title'); ?></strong>
+                                <p class="text-color-default text-start mb-0"><?php echo carbon_get_the_post_meta('quote_author_position'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -372,28 +366,55 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
             </div>
         </section>
 
-        <div class="container">
+        <?php
+            $args = array(
+                'post_type'      => 'client',
+                'order'          => 'ASC',
+                'post_status'    => 'publish',
+                'posts_per_page' => 14,
+            );
+            $q    = new WP_Query( $args );
+            if ( $q->have_posts() ):
+        ?>
+
+        <div class="container py-5 my-5-5">
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5"><?php echo carbon_get_the_post_meta('clients_title'); ?></h2>
+                    <p class="text-4 font-weight-light"><?php echo carbon_get_the_post_meta('clients_subtitle'); ?></p>
+                </div>
+            </div>
             <div class="row align-items-center text-center py-5 my-3">
-                <div class="col-sm-4 col-xl-2 mb-5 mb-xl-0">
-                    <img src="img/logos/logo-8.png" alt class="img-fluid" style="max-width: 90px;"/>
-                </div>
-                <div class="col-sm-4 col-xl-2 mb-5 mb-xl-0">
-                    <img src="img/logos/logo-9.png" alt class="img-fluid" style="max-width: 140px;"/>
-                </div>
-                <div class="col-sm-4 col-xl-2 mb-5 mb-xl-0">
-                    <img src="img/logos/logo-10.png" alt class="img-fluid" style="max-width: 140px;"/>
-                </div>
-                <div class="col-sm-4 col-xl-2 mb-5 mb-lg-0">
-                    <img src="img/logos/logo-11.png" alt class="img-fluid" style="max-width: 140px;"/>
-                </div>
-                <div class="col-sm-4 col-xl-2 mb-5 mb-lg-0">
-                    <img src="img/logos/logo-12.png" alt class="img-fluid" style="max-width: 100px;"/>
-                </div>
-                <div class="col-sm-4 col-xl-2">
-                    <img src="img/logos/logo-13.png" alt class="img-fluid" style="max-width: 100px;"/>
+                <div class="revolt-slider">
+                    <div class="revolt-slide-track">
+                            <?php
+                            while ($q->have_posts()):
+                                $q->the_post();
+
+                                $imgObj = getFeaturedImageObg('full');
+                                $imgWidth = (int) $imgObj[1];
+                                $imgHeight = (int) $imgObj[2];
+                                $thirdWidth = round($imgWidth / 3, 3);
+                                $thirdHeight = round($imgHeight / 3, 3);
+
+                                $title = get_the_title();
+
+                                $imgFormat = '<img src="%s" height="%d" width="%d" alt="%s">';
+
+                                ?>
+                                    <div class="revolt-slide">
+                                        <a href="<?php echo carbon_get_the_post_meta('clients_link') ?>" target="_blank">
+                                            <?php echo sprintf($imgFormat, $imgObj[0], $thirdHeight, $thirdWidth, $title); ?>
+                                        </a>
+                                    </div>
+                            <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <?php endif; ?>
 
         <div class="container-fluid">
             <div class="row">
