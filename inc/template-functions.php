@@ -9,6 +9,7 @@
  * Adds custom classes to the array of body classes.
  *
  * @param array $classes Classes for the body element.
+ *
  * @return array
  */
 function we_revolt_body_classes( $classes ) {
@@ -24,6 +25,7 @@ function we_revolt_body_classes( $classes ) {
 
 	return $classes;
 }
+
 add_filter( 'body_class', 'we_revolt_body_classes' );
 
 /**
@@ -34,16 +36,26 @@ function we_revolt_pingback_header() {
 		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
 	}
 }
+
 add_action( 'wp_head', 'we_revolt_pingback_header' );
 
 
 /************************************** Helper Functions ************************************/
 
 //Get Featured Image
-function getFeaturedImage($size): string {
+function getFeaturedImage( $size ): string {
 	return get_the_post_thumbnail_url( get_the_ID(), $size );
 }
 
-function getFeaturedImageObg($size): array {
+function getFeaturedImageObg( $size ): array {
 	return wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
 }
+
+function we_revolt_footer_nav_class( $attrs, $item, $args ) {
+	$class          = 'text-color-hover-primary'; // or something based on $item
+	$attrs['class'] = $class;
+
+	return $attrs;
+}
+
+add_filter( 'nav_menu_link_attributes', 'we_revolt_footer_nav_class', 10, 3 );

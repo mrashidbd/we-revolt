@@ -20,17 +20,17 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 ?>
     <div role="main" class="main">
         <div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual dots-inside dots-horizontal-center show-dots-hover nav-style-diamond nav-with-transparency nav-inside nav-inside-plus nav-dark nav-md nav-font-size-md show-nav-hover mb-0"
-             data-plugin-options="{'autoplay': false, 'autoplayTimeout': 7000}"
+             data-plugin-options="{'autoplay': true, 'autoplayTimeout': 6000}"
              data-dynamic-height="['700px','700px','600px','500px','410px']" style="height: 700px;">
             <div class="owl-stage-outer">
                 <div class="owl-stage">
 					<?php
-					$args = array(
+					$args = [
 						'post_type'      => 'slide',
 						'order'          => 'DESC',
 						'post_status'    => 'publish',
 						'posts_per_page' => 5,
-					);
+					];
 					$q    = new WP_Query( $args );
 					if ( $q->have_posts() ):
 						while ( $q->have_posts() ):
@@ -143,12 +143,12 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
         </div>
 
 	    <?php
-	    $args = array(
+	    $args = [
 		    'post_type'      => 'service',
 		    'order'          => 'DESC',
 		    'post_status'    => 'publish',
 		    'posts_per_page' => 4,
-	    );
+	    ];
 	    $q    = new WP_Query( $args );
 	    if ( $q->have_posts() ):
         ?>
@@ -210,12 +210,12 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
 
         wp_reset_postdata();
 
-	    $args = array(
+	    $args = [
 		    'post_type'      => 'project',
-		    'order'          => 'ASC',
+		    'order'          => 'DESC',
 		    'post_status'    => 'publish',
 		    'posts_per_page' => 7,
-	    );
+	    ];
 	    $q    = new WP_Query( $args );
 	    if ( $q->have_posts() ):
 		    ?>
@@ -367,12 +367,12 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
         </section>
 
         <?php
-            $args = array(
+            $args = [
                 'post_type'      => 'client',
-                'order'          => 'ASC',
+                'order'          => 'DESC',
                 'post_status'    => 'publish',
                 'posts_per_page' => 14,
-            );
+            ];
             $q    = new WP_Query( $args );
             if ( $q->have_posts() ):
         ?>
@@ -424,38 +424,67 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
             </div>
         </div>
 
+
+        <?php
+            $args = [
+                'post_type'      => 'post',
+                'order'          => 'DESC',
+                'post_status'    => 'publish',
+                'posts_per_page' => 3,
+            ];
+            $q    = new WP_Query( $args );
+            if ( $q->have_posts() ):
+        ?>
+
+
+
+
         <div class="container mt-5 pt-4 mb-5 mb-lg-4 mb-xl-0 pb-3 pb-xl-0">
             <div class="row">
                 <div class="col">
                     <h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5 appear-animation"
-                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Blog</h2>
+                        data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200"><?php echo carbon_get_the_post_meta('blog_section_title'); ?></h2>
                     <p class="text-4 font-weight-light mb-5-5 appear-animation"
-                       data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">Cras a elit sit
-                        amet leo accumsan volutsudisse. </p>
+                       data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+                        <?php echo carbon_get_the_post_meta('blog_section_subtitle'); ?>
+                    </p>
                 </div>
             </div>
             <div class="row row-gutter-sm justify-content-center mb-4 appear-animation"
                  data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
+
+	            <?php
+	            while ($q->have_posts()):
+		            $q->the_post();
+		            $author_id = get_the_author_meta( 'ID' );
+                    $author = get_the_author_meta( 'display_name', $author_id );
+
+                    $date = get_the_date();
+                    $date_arr = explode(' ', $date);
+                    $month = strtoupper(substr($date_arr[0], 0, 3));
+                    $day = rtrim($date_arr[1], ',');
+
+		            ?>
+
                 <div class="col-sm-9 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                    <a href="demo-construction-blog-post.html" class="text-decoration-none"
+                    <a href="<?php the_permalink(); ?>" class="text-decoration-none"
                        data-cursor-effect-hover="plus">
                         <div class="card border-0">
                             <div class="card-img-top position-relative overlay">
                                 <div class="position-absolute bottom-10 right-0 d-flex justify-content-end w-100 py-3 px-4 z-index-3">
 											<span class="text-center bg-primary text-color-light font-weight-semibold text-5-5 line-height-2 px-3 py-2">
 												<span class="position-relative z-index-2">
-													18
-													<span class="d-block custom-font-size-1 positive-ls-2 px-1">FEB</span>
+													<?php echo $day; ?>
+													<span class="d-block custom-font-size-1 positive-ls-2 px-1"><?php echo $month; ?></span>
 												</span>
 											</span>
                                 </div>
-                                <img src="img/demos/construction/blog/blog-thumb-1.jpg" class="img-fluid"
-                                     alt="Lorem Ipsum Dolor"/>
+                                <img src="<?php echo getFeaturedImage('blog_thumb'); ?>" class="img-fluid"
+                                     alt="<?php the_title(); ?>"/>
                             </div>
                             <div class="card-body py-4 px-0">
-                                <span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2">BY ADMIN</span>
-                                <h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">
-                                    Two-thirds of construction firms report strong Q4 turnover</h3>
+                                <span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2"><?php echo 'BY&nbsp;' . $author; ?></span>
+                                <h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2"><?php the_title(); ?></h3>
                                 <p class="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis,
                                     quidem similique... </p>
                                 <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
@@ -465,78 +494,24 @@ $paintBrush = get_template_directory_uri() . '/front-end-assets/icons/paint-brus
                                                  data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
                                                  style="width: 27px;"/>
 										</span>
+
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                    <a href="demo-construction-blog-post.html" class="text-decoration-none"
-                       data-cursor-effect-hover="plus">
-                        <div class="card border-0">
-                            <div class="card-img-top position-relative overlay">
-                                <div class="position-absolute bottom-10 right-0 d-flex justify-content-end w-100 py-3 px-4 z-index-3">
-											<span class="text-center bg-primary text-color-light font-weight-semibold text-5-5 line-height-2 px-3 py-2">
-												<span class="position-relative z-index-2">
-													15
-													<span class="d-block custom-font-size-1 positive-ls-2 px-1">FEB</span>
-												</span>
-											</span>
-                                </div>
-                                <img src="img/demos/construction/blog/blog-thumb-2.jpg" class="img-fluid"
-                                     alt="Lorem Ipsum Dolor"/>
-                            </div>
-                            <div class="card-body py-4 px-0">
-                                <span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2">BY ADMIN</span>
-                                <h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">
-                                    Creating buildings is great and we want more people involved</h3>
-                                <p class="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis,
-                                    quidem similique... </p>
-                                <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
-											View More
-											<img width="27" height="27"
-                                                 src="<?php echo $rightArrow; ?>" alt="" data-icon
-                                                 data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
-                                                 style="width: 27px;"/>
-										</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-9 col-md-6 col-lg-4">
-                    <a href="demo-construction-blog-post.html" class="text-decoration-none"
-                       data-cursor-effect-hover="plus">
-                        <div class="card border-0">
-                            <div class="card-img-top position-relative overlay">
-                                <div class="position-absolute bottom-10 right-0 d-flex justify-content-end w-100 py-3 px-4 z-index-3">
-											<span class="text-center bg-primary text-color-light font-weight-semibold text-5-5 line-height-2 px-3 py-2">
-												<span class="position-relative z-index-2">
-													12
-													<span class="d-block custom-font-size-1 positive-ls-2 px-1">FEB</span>
-												</span>
-											</span>
-                                </div>
-                                <img src="img/demos/construction/blog/blog-thumb-3.jpg" class="img-fluid"
-                                     alt="Lorem Ipsum Dolor"/>
-                            </div>
-                            <div class="card-body py-4 px-0">
-                                <span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2">BY ADMIN</span>
-                                <h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">
-                                    Construction is offering greater choice for daylight provision</h3>
-                                <p class="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis,
-                                    quidem similique... </p>
-                                <span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
-											View More
-											<img width="27" height="27"
-                                                 src="<?php echo $rightArrow; ?>" alt="" data-icon
-                                                 data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}"
-                                                 style="width: 27px;"/>
-										</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+
+
+                <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
+
+
+
             </div>
         </div>
+
+        <?php endif; ?>
+
+
 
         <div class="position-relative pb-5 d-sm-none d-xl-block">
             <div class="position-absolute transform3dy-n50 left-0">

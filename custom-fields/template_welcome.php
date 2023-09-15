@@ -46,6 +46,12 @@ function werevolt_template_welcome_cf(): void {
 				     ->set_width(50),
 				Field::make('text', 'clients_subtitle', __('Subtitle', 'revolt'))
 				     ->set_width(50)
+			] )
+			->add_tab( __( 'Blog Section' ), [
+				Field::make( 'text', 'blog_section_title', __( 'Title', 'revolt' ) )
+				     ->set_width(50),
+				Field::make('text', 'blog_section_subtitle', __('Subtitle', 'revolt'))
+				     ->set_width(50)
 			] );
 }
 

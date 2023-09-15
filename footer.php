@@ -14,8 +14,6 @@ $emailIcon = get_template_directory_uri() . '/front-end-assets/icons/email.svg';
 $phoneIcon = get_template_directory_uri() . '/front-end-assets/icons/phone.svg';
 
 ?>
-
-
 <footer id="footer" class="overflow-hidden border-0 m-0" style="background-image: url(<?php echo ASSETS . '/img/design-associates-footer-bg.jpg'; ?>); background-repeat: no-repeat; background-position: center bottom;">
     <div class="container pt-5">
         <div class="row pt-4 mb-5 gy-4">
@@ -24,43 +22,32 @@ $phoneIcon = get_template_directory_uri() . '/front-end-assets/icons/phone.svg';
                     <img alt="Porto" class="img-fluid logo" width="123" height="48" src="<?php echo get_template_directory_uri() . '/front-end-assets/img/Design-Associates-Logo.png'; ?>">
                 </a>
             </div>
+            <?php if ( has_nav_menu( 'menu-2' ) ): ?>
             <div class="col-lg-4 offset-lg-1">
                 <h4 class="text-color-dark font-weight-bold mb-4-5">Navigation</h4>
-                <ul class="list list-unstyled columns-lg-2">
-                    <li>
-                        <a href="demo-construction.html" class="text-color-hover-primary">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="demo-construction-company.html" class="text-color-hover-primary">
-                            Company
-                        </a>
-                    </li>
-                    <li>
-                        <a href="demo-construction-services.html" class="text-color-hover-primary">
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="demo-construction-projects.html" class="text-color-hover-primary">
-                            Projects
-                        </a>
-                    </li>
-                    <li>
-                        <a href="demo-construction-blog.html" class="text-color-hover-primary">
-                            Blog
-                        </a>
-                    </li>
-                    <li>
-                        <a href="demo-construction-contact.html" class="text-color-hover-primary">
-                            Contact
-                        </a>
-                    </li>
-                </ul>
+                    <?php
+                    $args = [
+                        'menu'           => "menu-2",
+                        'theme_location' => "menu-2",
+                        'menu_id'        => "mainNav",
+                        'menu_class'     => "list list-unstyled columns-lg-2",
+                        'container'      => "ul",
+                        'echo'           => true,
+                    ];
+                    wp_nav_menu( $args )
+                    ?>
             </div>
+            <?php else: ?>
+                <div class="col-lg-4 offset-lg-1"><?php _e('Please select the footer navigation menu', 'revolt'); ?></div>
+            <?php endif; ?>
+
+
             <div class="col-lg-5">
                 <h4 class="text-color-dark font-weight-bold mb-4-5">Newsletter</h4>
+
+                <?php echo do_shortcode('[mailpoet_form id="1"]'); ?>
+
+
                 <div class="newsletter">
                     <div class="alert alert-success d-none" id="newsletterSuccess">
                         <strong>Success!</strong> You've been added to our email list.
@@ -90,10 +77,19 @@ $phoneIcon = get_template_directory_uri() . '/front-end-assets/icons/phone.svg';
 
         <hr>
 
+        <?php
+            $year = date('Y');
+            $home_url = home_url();
+            $copyright_format = '<p class="text-color-grey text-3 mb-1"><a class="text-color-hover-primary" href="%1$s">%2$s</a>&nbsp;&copy;&nbsp;%3$s&nbsp;|&nbsp;%4$s</p>';
+            $dev_format = '<p class="text-color-grey text-3 mb-3">%1$s&nbsp;<a class="text-color-hover-primary" href="%2$s">%3$s</a></p>';
+            $dev_url = esc_url('https://mrashid.me/');
+        ?>
+
         <div class="footer-copyright bg-transparent pb-5 mt-5-5">
-            <div class="row pb-5">
-                <div class="col text-center mb-5">
-                    <p class="text-color-grey text-3 mb-3">Porto Construction © 2023. All Rights Reserved. </p>
+            <div class="row">
+                <div class="col text-center">
+                    <?php echo sprintf($copyright_format, $home_url, 'Design Associates Ltd.', $year, 'All Rights Reserved'); ?>
+                    <?php echo sprintf($dev_format, 'Design & Developed with ❤️ by', $dev_url, 'mRashid'); ?>
                     <ul class="footer-social-icons social-icons social-icons-clean social-icons-medium mb-5">
                         <li class="social-icons-instagram">
                             <a href="http://www.instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram text-4"></i></a>

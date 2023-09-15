@@ -48,6 +48,7 @@
                     <div class="header-column justify-content-end">
                         <div class="header-row">
                             <div class="header-nav header-nav-links order-3 order-lg-1">
+	                            <?php if ( has_nav_menu( 'menu-1' ) ): ?>
                                 <div class="header-nav-main header-nav-main-square header-nav-main-text-capitalize header-nav-main-effect-1 header-nav-main-sub-effect-1">
                                     <nav class="collapse px-3-5">
 										<?php
@@ -64,6 +65,9 @@
                                         ?>
                                     </nav>
                                 </div>
+                                <?php else: ?>
+                                    <div class="header-nav-main header-nav-main-square header-nav-main-text-capitalize header-nav-main-effect-1 header-nav-main-sub-effect-1"><?php _e('Please select the main navigation menu', 'revolt'); ?></div>
+                                <?php endif; ?>
                                 <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse"
                                         data-bs-target=".header-nav-main nav">
                                     <i class="fas fa-bars"></i>

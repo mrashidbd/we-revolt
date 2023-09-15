@@ -21,14 +21,15 @@ function we_revolt_setup(): void {
 	add_image_size( 'blog_thumb', 1200, 500, ['center', 'center'] );
 
 	register_nav_menus(
-		array(
-			'menu-1' => esc_html__( 'Primary', 'we-revolt' ),
-		)
+		[
+			'menu-1' => esc_html__( 'Primary Navigation', 'we-revolt' ),
+			'menu-2' => esc_html__( 'Footer Navigation', 'we-revolt' ),
+		]
 	);
 
 	add_theme_support(
 		'html5',
-		array(
+		[
 			'search-form',
 			'comment-form',
 			'comment-list',
@@ -36,19 +37,19 @@ function we_revolt_setup(): void {
 			'caption',
 			'style',
 			'script',
-		)
+		]
 	);
 
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
 	add_theme_support(
 		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
+		[
+			'height'      => 50,
+			'width'       => 200,
 			'flex-width'  => true,
 			'flex-height' => true,
-		)
+		]
 	);
 }
 
@@ -61,17 +62,17 @@ function we_revolt_content_width(): void {
 add_action( 'after_setup_theme', 'we_revolt_content_width', 0 );
 
 function we_revolt_widgets_init(): void {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'we-revolt' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'we-revolt' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+	$sidebar1 = [
+		'name'          => esc_html__( 'Blog Sidebar', 'we-revolt' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Sidebar for Blog Index Page', 'we-revolt' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	];
+
+	register_sidebar($sidebar1);
 }
 
 add_action( 'widgets_init', 'we_revolt_widgets_init' );
