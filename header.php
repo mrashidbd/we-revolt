@@ -61,7 +61,7 @@
                                                 'walker'         => new WP_WeRevolt_Navwalker(),
                                                 'echo'           => true,
                                             ];
-                                            wp_nav_menu( $args )
+                                            wp_nav_menu( $args );
                                         ?>
                                     </nav>
                                 </div>
